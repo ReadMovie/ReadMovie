@@ -7,6 +7,7 @@
             CategoriaEndpoints.Add(app);
             GeneroEndpoints.Add(app);
             CriterioEndpoints.Add(app);
+            LibroEndpoints.Add(app);
         }
     }
 }
