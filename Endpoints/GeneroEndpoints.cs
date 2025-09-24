@@ -2,73 +2,72 @@
 using ReadMovie.Data;
 using ReadMovie.Dto;
 using ReadMovie.Models;
-using System.Threading.Tasks.Dataflow;
 
 namespace ReadMovie.Endpoints
 {
-    public static class CategoriaEndpoints
+    public static class GeneroEndpoints
     {
         public static void Add(this IEndpointRouteBuilder routes)
         {
-            var group = routes.MapGroup("/api/categorias").WithTags("Categorias");
+            var group = routes.MapGroup("/api/generos").WithTags("Generos");
 
-            group.MapPost("/", async (ReadMovieDb db, CrearCategoriaDto dto) => { 
-               var errores = new Dictionary<string, string[]>();
+            group.MapPost("/", async (ReadMovieDb db, CrearGeneroDto dto) => {
+                var errores = new Dictionary<string, string[]>();
 
                 if (string.IsNullOrWhiteSpace(dto.Nombre))
                     errores["nombre"] = ["El nombre es requerido."];
 
                 if (errores.Count > 0) return Results.ValidationProblem(errores);
 
-                var entity = new Categoria
+                var entity = new Genero
                 {
                     Nombre = dto.Nombre
                 };
 
-                db.Categorias.Add(entity);
+                db.Generos.Add(entity);
                 await db.SaveChangesAsync();
 
-                var dtoSalida = new CategoriaDto(
-                    entity.Id, 
+                var dtoSalida = new GeneroDto(
+                    entity.Id,
                     entity.Nombre);
 
-                return Results.Created($"/categorias/{entity.Id}", dtoSalida);
+                return Results.Created($"/generos/{entity.Id}", dtoSalida);
 
             });
 
             group.MapGet("/", async (ReadMovieDb db) => {
 
-                var consulta = await db.Categorias.ToListAsync();
+                var consulta = await db.Generos.ToListAsync();
 
-                var categorias = consulta.Select(c => new CategoriaDto(
+                var generos = consulta.Select(c => new GeneroDto(
                     c.Id,
                     c.Nombre
                 ))
                 .OrderBy(c => c.Nombre)
                 .ToList();
 
-                return Results.Ok(categorias);
+                return Results.Ok(generos);
 
             });
 
             group.MapGet("/{id}", async (int id, ReadMovieDb db) => {
-                var categoria = await db.Categorias
+                var genero = await db.Generos
                 .Where(c => c.Id == id)
-                .Select(c => new CategoriaDto(
+                .Select(c => new GeneroDto(
                     c.Id,
                     c.Nombre
                 )).FirstOrDefaultAsync();
 
-                return Results.Ok(categoria);
+                return Results.Ok(genero);
             });
 
-            group.MapPut("/{id}", async (int id, ModificarCategoriaDto dto, ReadMovieDb db) => {
-                var categoria = await db.Categorias.FindAsync(id);
+            group.MapPut("/{id}", async (int id, ModificarGeneroDto dto, ReadMovieDb db) => {
+                var genero = await db.Generos.FindAsync(id);
 
-                if (categoria is null)
+                if (genero is null)
                     return Results.NotFound();
 
-                categoria.Nombre = dto.Nombre;
+                genero.Nombre = dto.Nombre;
 
                 await db.SaveChangesAsync();
 
