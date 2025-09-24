@@ -8,8 +8,6 @@
         long? LibroId,
         DateTime Fecha,
         string? Comentario,
-        short Puntuacion,
-        int Total,
-        short PuntuacionMax
+        short Puntuacion
     );
 }

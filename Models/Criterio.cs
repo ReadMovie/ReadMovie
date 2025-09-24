@@ -12,7 +12,5 @@
         public string? Comentario {  get; set; }
         public DateTime Fecha { get; set; }
         public short Puntuacion { get; set; }
-        public int Total { get; set; }
-        public short PuntuacionMax { get; set; }
     }
 }

@@ -40,9 +40,7 @@ namespace ReadMovie.Endpoints
                     entity.LibroId,
                     entity.Fecha,
                     entity.Comentario,
-                    entity.Puntuacion,
-                    0,
-                    5
+                    entity.Puntuacion
                 );
 
             return Results.Created($"/criterios/{entity.Id}", dtoSalida);
@@ -60,14 +58,29 @@ namespace ReadMovie.Endpoints
                     c.LibroId,
                     c.Fecha,
                     c.Comentario,
-                    c.Puntuacion,
-                    default,
-                    default
+                    c.Puntuacion
                 ))
                 .OrderBy(c => c.Comentario)
                 .ToList();
 
                 return Results.Ok(criterios);   
+            });
+
+            group.MapGet("/{id}", async (long id, ReadMovieDb db) => {
+                var criterio = await db.Criterios
+                .Where(c => c.Id == id)
+                .Select(c => new CriterioDto(
+                    c.Id,
+                    c.UsuarioId,
+                    c.PeliculaId,
+                    c.LibroId,
+                    c.Fecha,
+                    c.Comentario,
+                    c.Puntuacion
+
+                )).FirstOrDefaultAsync();
+
+                return Results.Ok(criterio);    
             });
         }
     }
