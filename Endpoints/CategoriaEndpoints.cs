@@ -51,7 +51,7 @@ namespace ReadMovie.Endpoints
 
             });
 
-            group.MapGet("/{id}", async (int id, ReadMovieDb db) => {
+            group.MapGet("/{id}", async (short id, ReadMovieDb db) => {
                 var categoria = await db.Categorias
                 .Where(c => c.Id == id)
                 .Select(c => new CategoriaDto(
@@ -62,7 +62,7 @@ namespace ReadMovie.Endpoints
                 return Results.Ok(categoria);
             });
 
-            group.MapPut("/{id}", async (int id, ModificarCategoriaDto dto, ReadMovieDb db) => {
+            group.MapPut("/{id}", async (short id, ModificarCategoriaDto dto, ReadMovieDb db) => {
                 var categoria = await db.Categorias.FindAsync(id);
 
                 if (categoria is null)
