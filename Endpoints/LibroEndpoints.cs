@@ -96,6 +96,8 @@ namespace ReadMovie.Endpoints
                 if (libro is null)
                     return Results.NotFound();
 
+                libro.GeneroId = dto.GeneroId;
+                libro.CategoriaId = dto.CategoriaId;
                 libro.Titulo = dto.Titulo;
                 libro.Autor = dto.Autor;
                 libro.FechaPublicacion = dto.FechaPublicacion;
