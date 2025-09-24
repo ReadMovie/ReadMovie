@@ -9,6 +9,7 @@
             CriterioEndpoints.Add(app);
             LibroEndpoints.Add(app);
             UsuarioEndpoints.Add(app);
+            PeliculaEndPoints.Add(app);
         }
     }
 }
