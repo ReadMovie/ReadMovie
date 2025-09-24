@@ -37,11 +37,10 @@ namespace ReadMovie.Endpoints
                 db.Libros.Add(entity);
                 await db.SaveChangesAsync();
 
-                // Se inicializan CategoriaId y GeneroId a 0, ya que no existen en la entidad Libro
                 var dtoSalida = new LibroDto(
                     entity.Id,
-                    0, // Valor por defecto para CategoriaId
-                    0, // Valor por defecto para GeneroId
+                    entity.GeneroId, 
+                    entity.CategoriaId,
                     entity.Titulo,
                     entity.Autor,
                     entity.FechaPublicacion,
@@ -55,8 +54,8 @@ namespace ReadMovie.Endpoints
 
                 var libros = consulta.Select(l => new LibroDto(
                     l.Id,
-                    0, // Valor por defecto para CategoriaId
-                    0, // Valor por defecto para GeneroId
+                    l.GeneroId,
+                    l.CategoriaId,
                     l.Titulo,
                     l.Autor,
                     l.FechaPublicacion,
@@ -74,8 +73,8 @@ namespace ReadMovie.Endpoints
                 .Where(l => l.Id == id)
                 .Select(l => new LibroDto(
                     l.Id,
-                    0,
-                    0, 
+                    l.GeneroId,
+                    l.CategoriaId, 
                     l.Titulo,
                     l.Autor,
                     l.FechaPublicacion,
