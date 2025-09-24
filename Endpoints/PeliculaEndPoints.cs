@@ -1,0 +1,66 @@
+﻿using Microsoft.EntityFrameworkCore;
+using ReadMovie.Data;
+using ReadMovie.Dto;
+using ReadMovie.Models;
+
+namespace ReadMovie.Endpoints
+{
+    public static class PeliculaEndPoints
+    {
+        public static void Add(this IEndpointRouteBuilder routes) {
+            var group = routes.MapGroup("/api/peliculas").WithTags("Peliculas");
+
+            group.MapPost("/", async (ReadMovieDb db, CrearPeliculaDto dto) => {
+                var errores = new Dictionary<string, string[]>();
+
+                if (string.IsNullOrWhiteSpace(dto.Titulo))
+                    errores["titulo"] = ["El titulo es requerido."];
+
+                if (string.IsNullOrWhiteSpace(dto.Director))
+                    errores["director"] = ["El director es requerido."];
+
+                var entity = new Pelicula {
+                    Titulo = dto.Titulo,
+                    Director = dto.Director,
+                    FechaLanzamineto = dto.FechaLanzamiento,
+                    Resumen = dto.Resumen,
+                };
+
+                db.Peliculas.Add(entity);
+                await db.SaveChangesAsync();
+
+                var dtoSalida = new PeliculaDto( entity.Id,
+                    entity.CategoriaId,
+                    entity.GeneroId, 
+                    entity.Titulo,
+                    entity.Director,
+                    entity.FechaLanzamineto,
+                    entity.Resumen);
+
+                return Results.Created($"/peliculas/{entity.Id}", dtoSalida);
+            });
+
+            group.MapGet("/", async (ReadMovieDb db) => {
+
+                var consulta = await db.Peliculas.ToListAsync();
+
+                var peliculas = consulta.Select(p => new PeliculaDto(
+                    p.Id,
+                    p.CategoriaId,
+                    p.GeneroId,
+                    p.Titulo,
+                    p.Director,
+                    p.FechaLanzamineto,
+                    p.Resumen
+
+                    ))
+                    .OrderBy(p => p.Titulo)
+                    .ToList();
+
+                return Results.Ok(peliculas);
+            });
+                
+        }
+       
+    }
+}
