@@ -9,7 +9,7 @@ namespace ReadMovie.Endpoints
 {
     public static class UsuarioEndpoints
     {
-        public static async Task Add(this IEndpointRouteBuilder routes)
+        public static void Add(this IEndpointRouteBuilder routes)
         {
             var group = routes.MapGroup("/api/usuarios").WithTags("usuarios");
 
