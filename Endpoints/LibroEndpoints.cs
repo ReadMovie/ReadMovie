@@ -34,7 +34,7 @@ namespace ReadMovie.Endpoints
                     CategoriaId = dto.CategoriaId,
                     Titulo = dto.Titulo,
                     Autor = dto.Autor,
-                    FechaPublicacion = DateTime.SpecifyKind(dto.FechaPublicacion, DateTimeKind.Utc),,
+                    FechaPublicacion = DateTime.SpecifyKind(dto.FechaPublicacion, DateTimeKind.Utc),
                     Resumen = dto.Resumen,
                 };
 
