@@ -20,6 +20,8 @@ namespace ReadMovie.Endpoints
                     errores["director"] = ["El director es requerido."];
 
                 var entity = new Pelicula {
+                    GeneroId = dto.GeneroId,
+                    CategoriaId = dto.CategoriaId,
                     Titulo = dto.Titulo,
                     Director = dto.Director,
                     FechaLanzamineto = dto.FechaLanzamiento,

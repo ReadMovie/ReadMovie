@@ -28,6 +28,8 @@ namespace ReadMovie.Endpoints
 
                 var entity = new Libro
                 {
+                    GeneroId = dto.GeneroId,
+                    CategoriaId = dto.CategoriaId,
                     Titulo = dto.Titulo,
                     Autor = dto.Autor,
                     FechaPublicacion = dto.FechaPublicacion,
