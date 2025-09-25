@@ -102,6 +102,18 @@ namespace ReadMovie.Endpoints
 
                 return Results.NoContent();
             });
+
+            group.MapDelete("/{id}", async (long id, ReadMovieDb db) =>
+            {
+                var pelicula = await db.Peliculas.FindAsync(id);
+
+                if (pelicula is null)
+                    return Results.NotFound();
+
+                db.Remove(pelicula);
+                await db.SaveChangesAsync();
+                return Results.NoContent();
+            });
         }
        
     }

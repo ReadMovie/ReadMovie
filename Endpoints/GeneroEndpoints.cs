@@ -73,6 +73,18 @@ namespace ReadMovie.Endpoints
 
                 return Results.NoContent();
             });
+
+            group.MapDelete("/{id}", async (short id, ReadMovieDb db) =>
+            {
+                var genero = await db.Generos.FindAsync(id);
+
+                if (genero is null)
+                    return Results.NotFound();
+
+                db.Remove(genero);
+                await db.SaveChangesAsync();
+                return Results.NoContent();
+            });
         }
     }
 }
