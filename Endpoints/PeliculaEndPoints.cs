@@ -59,7 +59,47 @@ namespace ReadMovie.Endpoints
 
                 return Results.Ok(peliculas);
             });
+
+            group.MapGet("/{id}", async (int id, ReadMovieDb db) =>
+            {
+                var pelicula = await db.Peliculas
+                .Where(p => p.Id == id)
+                .Select(p => new PeliculaDto(
+                    p.Id,
+                    p.GeneroId,
+                    p.CategoriaId,
+                    p.Titulo,
+                    p.Director,
+                    p.FechaLanzamineto,
+                    p.Resumen
+                )).FirstOrDefaultAsync();
+
+                if (pelicula is null)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.Ok(pelicula);
+            });
+
+            group.MapPut("/{id}", async (int id, ModificarPeliculaDto dto, ReadMovieDb db) =>
+            {
+                var pelicula = await db.Peliculas.FindAsync(id);
+
+                if (pelicula is null)
+                    return Results.NotFound();
+
+                pelicula.GeneroId = dto.GeneroId;
+                pelicula.CategoriaId = dto.CategoriaId;
+                pelicula.Titulo = dto.Titulo;
+                pelicula.Director = dto.Director;
+                pelicula.FechaLanzamineto = dto.FechaLanzamiento;
+                pelicula.Resumen = dto.Resumen;
                 
+                await db.SaveChangesAsync();
+
+                return Results.NoContent();
+            });
         }
        
     }
