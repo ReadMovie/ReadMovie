@@ -26,13 +26,15 @@ namespace ReadMovie.Endpoints
 
                 if (errores.Count > 0) return Results.ValidationProblem(errores);
 
+
+
                 var entity = new Libro
                 {
                     GeneroId = dto.GeneroId,
                     CategoriaId = dto.CategoriaId,
                     Titulo = dto.Titulo,
                     Autor = dto.Autor,
-                    FechaPublicacion = dto.FechaPublicacion,
+                    FechaPublicacion = DateTime.SpecifyKind(dto.FechaPublicacion, DateTimeKind.Utc),,
                     Resumen = dto.Resumen,
                 };
 
@@ -102,7 +104,7 @@ namespace ReadMovie.Endpoints
                 libro.CategoriaId = dto.CategoriaId;
                 libro.Titulo = dto.Titulo;
                 libro.Autor = dto.Autor;
-                libro.FechaPublicacion = dto.FechaPublicacion;
+                libro.FechaPublicacion = DateTime.SpecifyKind(dto.FechaPublicacion, DateTimeKind.Utc);
                 libro.Resumen = dto.Resumen;
 
                 await db.SaveChangesAsync();

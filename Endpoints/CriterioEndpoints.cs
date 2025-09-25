@@ -26,7 +26,7 @@ namespace ReadMovie.Endpoints
                     PeliculaId = dto.PeliculaId,
                     LibroId = dto.LibroId,
                     Comentario = dto.Comentario,
-                    Fecha = dto.Fecha,
+                    Fecha = DateTime.SpecifyKind(dto.Fecha, DateTimeKind.Utc),
                     Puntuacion = dto.Puntuacion,
                 };
 

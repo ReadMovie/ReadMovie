@@ -34,7 +34,8 @@ namespace ReadMovie.Endpoints
                 var entity = new Usuario
                 {
                     Nombre = dto.Nombre,
-                    FechaNacimiento = dto.FechaNacimiento,
+                    //FechaNacimiento = dto.FechaNacimiento,
+                    FechaNacimiento = DateTime.SpecifyKind(dto.FechaNacimiento, DateTimeKind.Utc),
                     Email = dto.Email,
                     Clave = dto.Clave,
 
@@ -91,7 +92,8 @@ namespace ReadMovie.Endpoints
                     return Results.NotFound();
 
                 Usuario.Nombre = dto.Nombre;
-                Usuario.FechaNacimiento = dto.FechaNacimiento;
+                //Usuario.FechaNacimiento = dto.FechaNacimiento;
+                Usuario.FechaNacimiento = DateTime.SpecifyKind(dto.FechaNacimiento, DateTimeKind.Utc);
                 Usuario.Email = dto.Email;
                 Usuario.Clave = dto.Clave;
                 Usuario.Rol = dto.Rol;

@@ -24,7 +24,7 @@ namespace ReadMovie.Endpoints
                     CategoriaId = dto.CategoriaId,
                     Titulo = dto.Titulo,
                     Director = dto.Director,
-                    FechaLanzamineto = dto.FechaLanzamiento,
+                    FechaLanzamineto = DateTime.SpecifyKind(dto.FechaLanzamiento, DateTimeKind.Utc),
                     Resumen = dto.Resumen,
                 };
 
@@ -95,7 +95,7 @@ namespace ReadMovie.Endpoints
                 pelicula.CategoriaId = dto.CategoriaId;
                 pelicula.Titulo = dto.Titulo;
                 pelicula.Director = dto.Director;
-                pelicula.FechaLanzamineto = dto.FechaLanzamiento;
+                pelicula.FechaLanzamineto = DateTime.SpecifyKind(dto.FechaLanzamiento, DateTimeKind.Utc);
                 pelicula.Resumen = dto.Resumen;
                 
                 await db.SaveChangesAsync();
