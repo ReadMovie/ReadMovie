@@ -71,7 +71,7 @@ namespace ReadMovie.Endpoints
                 return Results.Ok(libros);
             });
 
-            group.MapGet("/{id}", async (int id, ReadMovieDb db) =>
+            group.MapGet("/{id}", async (long id, ReadMovieDb db) =>
             {
                 var libro = await db.Libros
                 .Where(l => l.Id == id)
@@ -93,7 +93,7 @@ namespace ReadMovie.Endpoints
                 return Results.Ok(libro);
             });
 
-            group.MapPut("/{id}", async (int id, ModificarLibroDto dto, ReadMovieDb db) =>
+            group.MapPut("/{id}", async (long id, ModificarLibroDto dto, ReadMovieDb db) =>
             {
                 var libro = await db.Libros.FindAsync(id);
 
